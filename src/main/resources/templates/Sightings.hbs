@@ -1,0 +1,19 @@
+{{#partial "content"}}
+    <div class="col-md-12">
+        <h4><a href="/">Home</a></h4>
+
+        <h4>All sightings location and ranger's name</h4>
+        {{#if sights}}
+            {{#each sights}}
+                <ul>
+                    {{animal_id}}
+                    {{rangers_id}}
+                <li>{{report}}</li>
+                </ul>
+            {{/each}}
+        {{else}}
+            <p>No sighting</p>
+        {{/if}}
+    </div>
+{{/partial}}
+{{> layout.hbs}}

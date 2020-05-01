@@ -40,6 +40,7 @@ public class Endangered extends Animal {
                             .addParameter("health", this.health)
                             .addParameter("ranger", this.Ranger)
                             .addParameter("type", this.type)
+                            .throwOnMappingFailure(false)
                             .executeUpdate()
                             .getKey();
         }
@@ -48,7 +49,9 @@ public class Endangered extends Animal {
     public static List all() {
         String sql = "SELECT * FROM animals";
         try (Connection con = DB.sql2o.open()) {
-            return con.createQuery(sql).executeAndFetch(Endangered.class);
+            return con.createQuery(sql)
+                    .throwOnMappingFailure(false)
+                    .executeAndFetch(Endangered.class);
         }
     }
 
@@ -57,6 +60,7 @@ public class Endangered extends Animal {
         try (Connection con = DB.sql2o.open()) {
             Endangered animals = con.createQuery(sql)
                     .addParameter("id", id)
+                    .throwOnMappingFailure(false)
                     .executeAndFetchFirst(Endangered.class);
             return animals;
         }

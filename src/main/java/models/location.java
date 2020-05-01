@@ -1,7 +1,6 @@
 package models;
 
 import org.sql2o.Connection;
-
 import java.net.ConnectException;
 import java.util.List;
 
@@ -22,6 +21,7 @@ public class location{
             this.id = (int)
             con.createQuery(sql,true)
                     .addParameter("location",this.Location)
+                    .throwOnMappingFailure(false)
                     .executeUpdate()
                     .getKey();
         }
@@ -29,7 +29,9 @@ public class location{
     public static List all(){
         String sql = "SELECT * FROM location";
         try(Connection con = DB.sql2o.open()){
-            return con.createQuery(sql).executeAndFetch(location.class);
+            return con.createQuery(sql)
+                    .throwOnMappingFailure(false)
+                    .executeAndFetch(location.class);
         }
     }
     public static location find(int id) {
@@ -37,6 +39,7 @@ public class location{
         try (Connection con = DB.sql2o.open()) {
             location Location = con.createQuery(sql)
                     .addParameter("id", id)
+                    .throwOnMappingFailure(false)
                     .executeAndFetchFirst(location.class);
             return Location;
         }
