@@ -49,6 +49,7 @@ public  class Ranger{
                     .addParameter("name" , this.Name)
                     .addParameter("phone",this.Phone)
                     .addParameter("email", this.Email)
+                    .throwOnMappingFailure(false)
                     .executeUpdate()
                     .getKey();
         }
@@ -56,7 +57,9 @@ public  class Ranger{
     public static List all(){
         String sql = "SELECT * FROM rangers";
         try(Connection con = DB.sql2o.open()){
-            return con.createQuery(sql).executeAndFetch(Ranger.class);
+            return con.createQuery(sql)
+                    .throwOnMappingFailure(false)
+                    .executeAndFetch(Ranger.class);
         }
     }
     public static Ranger find(int id){
@@ -64,6 +67,7 @@ public  class Ranger{
         try (Connection con = DB.sql2o.open()){
             Ranger ranger = con.createQuery(sql)
                     .addParameter("id",id)
+                    .throwOnMappingFailure(false)
                     .executeAndFetchFirst(Ranger.class);
             return ranger;
         }
@@ -73,6 +77,7 @@ public  class Ranger{
             String sql = "SELECT * FROM animals where rangerid=:id";
             return con.createQuery(sql)
                     .addParameter("id", this.id)
+                    .throwOnMappingFailure(false)
                     .executeAndFetch(Endangered.class);
         }
     }
@@ -81,6 +86,12 @@ public  class Ranger{
             String sql = "DELETE * FROM  rangers WHERE id = :id";
             con.createQuery(sql)
                     .addParameter("id",this.id)
+                    .throwOnMappingFailure(false)
+                    .executeUpdate();
+            String sql2 = "DELETE from sightings WHERE animal_id = :id";
+            con.createQuery(sql2)
+                    .addParameter("id", id)
+                    .throwOnMappingFailure(false)
                     .executeUpdate();
         }
     }
@@ -89,6 +100,7 @@ public  class Ranger{
         try(Connection con = DB.sql2o.open()){
             return con.createQuery(sql)
                     .addParameter("id",this.id)
+                    .throwOnMappingFailure(false)
                     .executeAndFetch(Sighting.class);
         }
     }
