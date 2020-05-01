@@ -2,6 +2,7 @@ package models;
 
 import org.sql2o.Connection;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Sighting {
@@ -48,6 +49,21 @@ public class Sighting {
                     .addParameter("location",this.Location_id)
                     .executeUpdate()
                     .getKey();
+        }
+    }
+    public static List all(){
+        String sql = "SELECT * FROM sighting";
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery(sql).executeAndFetch(Sighting.class);
+        }
+    }
+    public static Sighting find(int id) {
+        String sql = "SELECT * FROM sightings WHERE id = :id";
+        try (Connection con = DB.sql2o.open()) {
+            Sighting sights = con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Sighting.class);
+            return sights;
         }
     }
 

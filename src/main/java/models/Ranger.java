@@ -84,4 +84,12 @@ public  class Ranger{
                     .executeUpdate();
         }
     }
+    public  List<Sighting> allSightings(){
+        String sql = "SELECT * FROM sightings WHERE  ranger_id = : id";
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery(sql)
+                    .addParameter("id",this.id)
+                    .executeAndFetch(Sighting.class);
+        }
+    }
 }
