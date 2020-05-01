@@ -1,6 +1,5 @@
 import models.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import static spark.Spark.*;
@@ -26,6 +25,7 @@ public class App{
             Map<String,Object>model = new HashMap<>();
             return  new ModelAndView(model,"Sight-form.hbs");
         },new HandlebarsTemplateEngine());
+        // post new sightings
         post("/sightings",(request, response) -> {
             Map<String,Object>model = new HashMap<>();
             int animal = Integer.parseInt(request.queryParams("Animal_id"));
@@ -40,6 +40,17 @@ public class App{
             }
             return new ModelAndView(model,"Sightings.hbs");
         }, new HandlebarsTemplateEngine());
+        // get all rangers
+        get ( "/rangers",(request, response) -> {
+            Map<String,Object> model = new HashMap<>();
+            model.put("rangers", Ranger.all());
+            return new ModelAndView(model,"rangers.hbs");
+        },new HandlebarsTemplateEngine());
+        //display rangers form
+        get ( "/rangers/form",(request, response) -> {
+            Map<String,Object> model = new HashMap<>();
+            return new ModelAndView(model,"ranger-form.hbs");
+        },new HandlebarsTemplateEngine());
 
     }
 }
