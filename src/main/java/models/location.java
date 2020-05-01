@@ -32,4 +32,14 @@ public class location{
             return con.createQuery(sql).executeAndFetch(location.class);
         }
     }
+    public static location find(int id) {
+        String sql = "SELECT * FROM location WHERE id = :id";
+        try (Connection con = DB.sql2o.open()) {
+            location Location = con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(location.class);
+            return Location;
+        }
+    }
+
 }
