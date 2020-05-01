@@ -52,7 +52,7 @@ public class Sighting {
                     .getKey();
         }
     }
-    public static List all(){
+    public static List<Sighting> all(){
         String sql = "SELECT * FROM sightings";
         try(Connection con = DB.sql2o.open()){
             return con.createQuery(sql)
