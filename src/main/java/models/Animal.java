@@ -2,14 +2,12 @@ package models;
 
 import java.util.Objects;
 
-public class Animal{
+public  abstract class Animal{
     int id;
     String name;
+    int age ;
+    String type;
 
-    public Animal(String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,36 +1,21 @@
 package models;
 
+import java.util.List;
 import java.util.Objects;
+import org.sql2o.*;
 
-public class Endangered{
-    int id;
-    String name;
+
+public class Endangered extends Animal {
     String health;
-    int age;
-    int Animal_id;
-    int Ranger_id;
-       public Endangered(String name, String health, int age,int species,int ranger) {
-            this.name = name;
-            this.health = health;
-            this.age = age;
-            this.Animal_id = species;
-            this.Ranger_id = ranger;
-    }
+    int Ranger;
+    public static final String DATABASE_TYPE = "Endangered";
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Endangered that = (Endangered) o;
-        return age == that.age &&
-                Animal_id == that.Animal_id &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(health, that.health);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, health, age, Animal_id);
+    public Endangered(String name, String health, int age, int species, int ranger) {
+        this.name = name;
+        this.age = age;
+        this.health = health;
+        this.Ranger = ranger;
+        this.type = DATABASE_TYPE;
     }
 
     public String getName() {
@@ -43,5 +28,37 @@ public class Endangered{
 
     public int getAge() {
         return age;
+    }
+
+    public void save() {
+        String sql = "INSERT INTO animals(name,age,health,rangerid,type) VALUES (:name,:age,:health,:ranger,:type)";
+        try (Connection con = DB.sql2o.open()) {
+            this.id = (int)
+                    con.createQuery(sql, true)
+                            .addParameter("name", this.name)
+                            .addParameter("age", this.age)
+                            .addParameter("health", this.health)
+                            .addParameter("ranger", this.Ranger)
+                            .addParameter("type", this.type)
+                            .executeUpdate()
+                            .getKey();
+        }
+    }
+
+    public static List all() {
+        String sql = "SELECT * FROM animals";
+        try (Connection con = DB.sql2o.open()) {
+            return con.createQuery(sql).executeAndFetch(Endangered.class);
+        }
+    }
+
+    public static Endangered find(int id) {
+        String sql = "SELECT * FROM animals WHERE id = :id";
+        try (Connection con = DB.sql2o.open()) {
+            Endangered animals = con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Endangered.class);
+            return animals;
+        }
     }
 }

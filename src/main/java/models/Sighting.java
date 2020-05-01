@@ -1,8 +1,11 @@
 package models;
 
+import org.sql2o.Connection;
+
 import java.util.Objects;
 
 public class Sighting {
+    int id;
     int Animal_id;
     String Report;
     int rangers_id;
@@ -34,4 +37,18 @@ public class Sighting {
     public String getReport() {
         return Report;
     }
+    public void save(){
+        String sql = "INSERT INTO  sightings (animal_id,report,ranger_id,location_id) VALUES (:animal,:report,:ranger,:location";
+        try(Connection con = DB.sql2o.open()){
+            this.id =(int)
+            con.createQuery(sql,true)
+                    .addParameter("animal",this.Animal_id)
+                    .addParameter("report",this.Report)
+                    .addParameter("ranger",this.rangers_id)
+                    .addParameter("location",this.Location_id)
+                    .executeUpdate()
+                    .getKey();
+        }
+    }
+
 }
