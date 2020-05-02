@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Objects;
 
 public  class Animal{
-    private int id;
-    private String name;
-    private int sightingId;
+     int id;
+     String name;
+     int sightingId;
 
     public Animal(String name, int sightingId) {
                 this.name = name;
                 this.sightingId =sightingId;
-            }
+    }
 
 
     @Override

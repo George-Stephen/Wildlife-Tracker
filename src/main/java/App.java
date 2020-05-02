@@ -22,15 +22,15 @@ public class App{
         post("/animals/new",(request, response) -> {
            Map<String,Object>model = new HashMap<>();
            String animalName = request.queryParams("Name");
-           String health = request.queryParams("health");
-           String Age = request.queryParams("age");
            String rangerName = request.queryParams("ranger");
            String location = request.queryParams("location");
            int sightId = Integer.parseInt(request.queryParams("sightingId"));
-           Animal animal = new Animal(animalName,sightId);
-           animal.saveAnimal();
-           Sighting sight = new Sighting(rangerName,location);
-           sight.saveSighting();
+           try {
+               Animal animal = new Animal(animalName, sightId);
+               Sighting sight = new Sighting(rangerName, location);
+           }catch(IllegalArgumentException exception){
+               System.out.println("Enter the right data");
+           }
            return new ModelAndView(model,"animal.hbs");
         },new HandlebarsTemplateEngine());
         get("/Endangered/form",(request, response) -> {
@@ -42,10 +42,7 @@ public class App{
             String animalName = request.queryParams("Name");
             String health = request.queryParams("health");
             String Age = request.queryParams("age");
-            String rangerName = request.queryParams("ranger");
-            String location = request.queryParams("location");
             Endangered endangered = new Endangered(animalName,health,Age);
-            endangered.save();
             return new ModelAndView(model,"endangered.hbs");
         },new HandlebarsTemplateEngine());
 
