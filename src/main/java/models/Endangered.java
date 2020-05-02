@@ -9,12 +9,14 @@ public class Endangered {
     public String name;
     public String health;
     public String age;
+    public String ranger;
     public static final String DATABASE_TYPE = "Endangered";
 
-    public Endangered(String name, String health, String age) {
+    public Endangered(String name, String health, String age,String ranger) {
         this.name = name ;
         this.health = health;
         this.age = age;
+        this.ranger = ranger;
 
     }
 
@@ -31,13 +33,14 @@ public class Endangered {
     }
 
     public void save() {
-        String sql = "INSERT INTO endangered(name,age,health) VALUES (:name,:age,:health)";
+        String sql = "INSERT INTO endangered(name,age,health,ranger) VALUES (:name,:age,:health,:ranger)";
         try (Connection con = DB.sql2o.open()) {
             this.id = (int)
                     con.createQuery(sql, true)
                             .addParameter("name", this.name)
                             .addParameter("age", this.age)
                             .addParameter("health", this.health)
+                            .addParameter("ranger",this.ranger)
                             .executeUpdate()
                             .getKey();
         }
@@ -47,7 +50,6 @@ public class Endangered {
         String sql = "SELECT * FROM endangered";
         try (Connection con = DB.sql2o.open()) {
             return con.createQuery(sql)
-                    .throwOnMappingFailure(false)
                     .executeAndFetch(Endangered.class);
         }
     }

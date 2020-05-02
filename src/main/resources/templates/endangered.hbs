@@ -1,0 +1,18 @@
+{{#partial "content"}}
+    <div class="jumbotron">
+        <h2>All endangered animals</h2>
+
+        {{#if animals}}
+    {{#each animals}}
+        <hr>
+        <h5>Name:{{name}}</h5>
+        <h5>Health: {{health}}</h5>
+        <h5>Age: {{age}}</h5>
+        <hr>
+    {{/each}}
+        {{else}}
+            <h3>No endangered animals</h3>
+        {{/if}}
+    </div>
+{{/partial}}
+{{> layout.hbs}}

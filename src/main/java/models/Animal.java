@@ -1,7 +1,6 @@
 package models;
 
-import org.sql2o.Connection;
-
+import org.sql2o.*;
 import java.util.List;
 import java.util.Objects;
 

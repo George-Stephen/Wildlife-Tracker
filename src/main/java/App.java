@@ -15,7 +15,7 @@ public class App{
             Map<String,Object> model = new HashMap<>();
             return new ModelAndView(model,"index.hbs");
         },new HandlebarsTemplateEngine());
-        // get new animal
+        // get new animals
         get( "/animal/form", (request, response) -> {
             Map<String,Object> model = new HashMap<>();
             return new ModelAndView(model,"animal-form.hbs");
@@ -36,13 +36,14 @@ public class App{
            }catch(IllegalArgumentException exception){
                System.out.println("Enter the right data");
            }
-           return new ModelAndView(model,"animal.hbs");
+           return new ModelAndView(model,"success.hbs");
         },new HandlebarsTemplateEngine());
         get("/animals/new",(request, response) -> {
             Map<String,Object> model = new HashMap<>();
             model.put("animals",Animal.allAnimals());
             return new ModelAndView(model,"animal.hbs");
         }, new HandlebarsTemplateEngine());
+        // get endangered
         get("/Endangered/form",(request, response) -> {
             Map<String,Object>model = new HashMap<>();
             return new ModelAndView(model,"Endangered-form.hbs");
@@ -54,10 +55,15 @@ public class App{
             String Age = request.queryParams("age");
             String rangerName = request.queryParams("ranger");
             String location = request.queryParams("location");
-            Endangered endangered = new Endangered(animalName,health,Age);
+            Endangered endangered = new Endangered(animalName,health,Age,rangerName);
             endangered.save();
-            return new ModelAndView(model,"endangered.hbs");
+            return new ModelAndView(model,"success.hbs");
         },new HandlebarsTemplateEngine());
+        get("/Endangered/new",(request, response) -> {
+            Map<String,Object>model = new HashMap<>();
+            model.put("animals",Endangered.all());
+            return new ModelAndView(model,"endangered.hbs");
+        }, new HandlebarsTemplateEngine());
 
     }
 }
