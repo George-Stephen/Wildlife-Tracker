@@ -51,6 +51,14 @@ public class App{
             Map<String,Object> model = new HashMap<>();
             return new ModelAndView(model,"ranger-form.hbs");
         },new HandlebarsTemplateEngine());
+        // post from the form
+        //get all animals recorded
+        get("/animals",(request, response) -> {
+            Map<String,Object>model = new HashMap<>();
+            return new ModelAndView(model,"animal.hbs");
+        },new HandlebarsTemplateEngine());
+        // display animals form
+        //post from animals form
 
     }
 }
