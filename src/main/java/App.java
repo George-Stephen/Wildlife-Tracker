@@ -55,9 +55,14 @@ public class App{
         //get all animals recorded
         get("/animals",(request, response) -> {
             Map<String,Object>model = new HashMap<>();
-            return new ModelAndView(model,"animal.hbs");
+            model.put("animals",Endangered.all());
+            return new ModelAndView(model,"animals.hbs");
         },new HandlebarsTemplateEngine());
         // display animals form
+        get("/animals/new",(request, response) -> {
+            Map<String,Object>model = new HashMap<>();
+            return new ModelAndView(model,"animal-form.hbs");
+        },new HandlebarsTemplateEngine());
         //post from animals form
 
     }
