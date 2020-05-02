@@ -10,7 +10,7 @@ public class Endangered extends Animal {
     int Ranger;
     public static final String DATABASE_TYPE = "Endangered";
 
-    public Endangered(String name, String health, int age, int species, int ranger) {
+    public Endangered(String name, String health, int age, int ranger) {
         this.name = name;
         this.age = age;
         this.health = health;

@@ -52,6 +52,10 @@ public class App{
             return new ModelAndView(model,"ranger-form.hbs");
         },new HandlebarsTemplateEngine());
         // post from the form
+        post("/animals",(request, response) -> {
+          Map<String,Object> model = new HashMap<>();
+          return new ModelAndView(model,"animal.hbs");
+        },new HandlebarsTemplateEngine());
         //get all animals recorded
         get("/animals",(request, response) -> {
             Map<String,Object>model = new HashMap<>();
@@ -59,11 +63,24 @@ public class App{
             return new ModelAndView(model,"animals.hbs");
         },new HandlebarsTemplateEngine());
         // display animals form
-        get("/animals/new",(request, response) -> {
+        get("/animals/form",(request, response) -> {
             Map<String,Object>model = new HashMap<>();
             return new ModelAndView(model,"animal-form.hbs");
         },new HandlebarsTemplateEngine());
         //post from animals form
+        post("/rangers",(request, response) -> {
+            Map<String,Object> model = new HashMap<>();
+            String name = request.queryParams("Name");
+            String email = request.queryParams("Email");
+            String phone = request.queryParams("phone");
+            try{
+                Ranger ranger = new Ranger(name,phone,email);
+                ranger.save();
+            }catch(IllegalArgumentException exception){
+                System.out.println("Enter the right data");
+            }
+            return new ModelAndView(model,"rangers.hbs");
+        },new HandlebarsTemplateEngine());
 
     }
 }
