@@ -38,6 +38,11 @@ public class App{
            }
            return new ModelAndView(model,"animal.hbs");
         },new HandlebarsTemplateEngine());
+        get("/animals/new",(request, response) -> {
+            Map<String,Object> model = new HashMap<>();
+            model.put("animals",Animal.allAnimals());
+            return new ModelAndView(model,"animal.hbs");
+        }, new HandlebarsTemplateEngine());
         get("/Endangered/form",(request, response) -> {
             Map<String,Object>model = new HashMap<>();
             return new ModelAndView(model,"Endangered-form.hbs");
