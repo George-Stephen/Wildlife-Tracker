@@ -54,7 +54,7 @@ public  class Ranger{
                     .getKey();
         }
     }
-    public static List all(){
+    public static List<Ranger> all(){
         String sql = "SELECT * FROM rangers";
         try(Connection con = DB.sql2o.open()){
             return con.createQuery(sql)
