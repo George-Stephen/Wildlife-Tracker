@@ -1,12 +1,18 @@
 package models;
 
+import org.sql2o.*;
+import java.util.List;
 import java.util.Objects;
 
-public  abstract class Animal{
-    int id;
-    String name;
-    int age ;
-    String type;
+public  class Animal{
+     int id;
+     String name;
+     int sightingId;
+
+    public Animal(String name, int sightingId) {
+                this.name = name;
+                this.sightingId =sightingId;
+    }
 
 
     @Override
@@ -32,5 +38,30 @@ public  abstract class Animal{
 
     public void setName(String name) {
         this.name = name;
+    }
+    public void saveAnimal() {
+        try (Connection con = DB.sql2o.open()) {
+            String sql = "INSERT INTO animals (name,sightingId) VALUES (:name,:sightingId)";
+            this.id = (int)
+            con.createQuery(sql,true)
+                    .addParameter("name" ,this.name)
+                    .addParameter("sightingId",this.sightingId)
+                    .executeUpdate()
+                    .getKey();
+        }
+    }
+    public static List<Animal>allAnimals(){
+        String sql = "SELECT  * FROM animals";
+        try(Connection con = DB.sql2o.open()){
+            return con.createQuery(sql).executeAndFetch(Animal.class);
+        }
+    }
+    public static Animal findAnimal(int id){
+        try(Connection con = DB.sql2o.open()){
+            String sql = "SELECT * FROM animals WHERE id = :id";
+            Animal animal = con.createQuery(sql)
+                    .executeAndFetchFirst(Animal.class);
+            return animal;
+        }
     }
 }

@@ -1,21 +1,23 @@
 package models;
 
 import java.util.List;
-import java.util.Objects;
 import org.sql2o.*;
 
 
-public class Endangered extends Animal {
-    String health;
-    int Ranger;
+public class Endangered {
+    public int id;
+    public String name;
+    public String health;
+    public String age;
+    public String ranger;
     public static final String DATABASE_TYPE = "Endangered";
 
-    public Endangered(String name, String health, int age, int species, int ranger) {
-        this.name = name;
-        this.age = age;
+    public Endangered(String name, String health, String age,String ranger) {
+        this.name = name ;
         this.health = health;
-        this.Ranger = ranger;
-        this.type = DATABASE_TYPE;
+        this.age = age;
+        this.ranger = ranger;
+
     }
 
     public String getName() {
@@ -26,31 +28,28 @@ public class Endangered extends Animal {
         return health;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
     public void save() {
-        String sql = "INSERT INTO animals(name,age,health,rangerid,type) VALUES (:name,:age,:health,:ranger,:type)";
+        String sql = "INSERT INTO endangered(name,age,health,ranger) VALUES (:name,:age,:health,:ranger)";
         try (Connection con = DB.sql2o.open()) {
             this.id = (int)
                     con.createQuery(sql, true)
                             .addParameter("name", this.name)
                             .addParameter("age", this.age)
                             .addParameter("health", this.health)
-                            .addParameter("ranger", this.Ranger)
-                            .addParameter("type", this.type)
-                            .throwOnMappingFailure(false)
+                            .addParameter("ranger",this.ranger)
                             .executeUpdate()
                             .getKey();
         }
     }
 
-    public static List all() {
-        String sql = "SELECT * FROM animals";
+    public static List<Endangered> all() {
+        String sql = "SELECT * FROM endangered";
         try (Connection con = DB.sql2o.open()) {
             return con.createQuery(sql)
-                    .throwOnMappingFailure(false)
                     .executeAndFetch(Endangered.class);
         }
     }
