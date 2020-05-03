@@ -1,0 +1,54 @@
+{{#partial "content"}}
+    <div class="jumbotron">
+        <form action="/Endangered/new" method="post" name="endangered">
+            <div class="form-group">
+                <label for="Name">Animal name
+                    <select name="Name">
+                        {{#each animals}}
+                            <option>{{name}}</option>
+                        {{/each}}
+                    </select>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="health">Health
+                    <select name="health">
+                        <option>Ill</option>
+                        <option>Okay</option>
+                        <option>Healthy</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="age">Age
+                    <select name="age">
+                        <option>Newborn</option>
+                        <option>Young</option>
+                        <option>Adult</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="ranger">Ranger that found it
+                    <select name="ranger">
+                        {{#each rangers}}
+                        <option>{{name}}</option>
+                        {{/each}}
+                    </select>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="location">Location
+                    <select name="location">
+                        <option>By the riverside</option>
+                        <option>Near the forest</option>
+                        <option>By the mugumo tree</option>
+                        <option>Near the waterfall</option>
+                    </select>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-success">Add Animal</button>
+        </form>
+    </div>
+{{/partial}}
+{{>layout.hbs}}

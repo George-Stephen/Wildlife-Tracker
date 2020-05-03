@@ -1,0 +1,5 @@
+models/DatabaseRule.class
+models/SightingTest.class
+models/EndangeredTest.class
+models/RangerTest.class
+models/locationTest.class

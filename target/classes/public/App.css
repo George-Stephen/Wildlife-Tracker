@@ -1,0 +1,29 @@
+body{
+    background-image: url("/images/maxresdefault-1-1280x635.jpg");
+    background-repeat: no-repeat;
+    background-size: 1500px;
+    text-align : center;
+}
+img{
+border-radius : 200px;
+
+}
+.col-md-4{
+    border: double;
+    border-radius : 100px;
+
+}
+a{
+color: grey;
+font-size : 20px;
+text-align : center ;
+}
+.jumbotron{
+ border-radius : 100px;
+ border: double;
+
+}
+.success{
+color: green;
+font-size : 50px;
+}

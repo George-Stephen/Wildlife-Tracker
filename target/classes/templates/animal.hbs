@@ -1,0 +1,13 @@
+{{#partial "content"}}
+<div class="jumbotron">
+    <h3><a href="/">Home</a></h3>
+    {{#if animals}}
+    {{#each animals}}
+    <h4>Name : {{name}}</h4>
+    {{/each}}
+    {{else}}
+        <h3>No animals present</h3>
+    {{/if}}
+</div>
+{{/partial}}
+{{>layout.hbs}}
