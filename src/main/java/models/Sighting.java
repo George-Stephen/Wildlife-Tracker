@@ -3,15 +3,20 @@ package models;
 import org.sql2o.Connection;
 import java.util.List;
 import java.util.Objects;
+import java.sql.Timestamp;
+import java.util.Date;
 
 public class Sighting {
     int id;
     String rangerName;
     String Location;
+    private Date date= new Date();
+    private Timestamp time;
 
     public Sighting(String rangerName, String Location) {
         this.rangerName = rangerName;
         this.Location = Location;
+        this.time = new Timestamp(date.getTime());
     }
 
     @Override

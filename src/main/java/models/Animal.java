@@ -40,6 +40,9 @@ public  class Animal implements methods{
         this.name = name;
     }
     public void save() {
+        if( this.sightingId ==-1) {
+            throw new IllegalArgumentException("Enter the right sighting Id");
+        }
         try (Connection con = DB.sql2o.open()) {
             String sql = "INSERT INTO animals (name,sightingId) VALUES (:name,:sightingId)";
             this.id = (int)
