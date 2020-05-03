@@ -3,7 +3,11 @@
         <form action="/Endangered/new" method="post" name="endangered">
             <div class="form-group">
                 <label for="Name">Animal name
-                    <input type="text" name="Name" id="Name">
+                    <select name="Name">
+                        {{#each animals}}
+                            <option>{{name}}</option>
+                        {{/each}}
+                    </select>
                 </label>
             </div>
             <div class="form-group">
@@ -26,7 +30,11 @@
             </div>
             <div class="form-group">
                 <label for="ranger">Ranger that found it
-                    <input type="text" name="ranger" id="ranger">
+                    <select name="ranger">
+                        {{#each rangers}}
+                        <option>{{name}}</option>
+                        {{/each}}
+                    </select>
                 </label>
             </div>
             <div class="form-group">

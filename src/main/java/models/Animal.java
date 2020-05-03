@@ -4,7 +4,7 @@ import org.sql2o.*;
 import java.util.List;
 import java.util.Objects;
 
-public  class Animal{
+public  class Animal implements methods{
      int id;
      String name;
      int sightingId;
@@ -39,7 +39,7 @@ public  class Animal{
     public void setName(String name) {
         this.name = name;
     }
-    public void saveAnimal() {
+    public void save() {
         try (Connection con = DB.sql2o.open()) {
             String sql = "INSERT INTO animals (name,sightingId) VALUES (:name,:sightingId)";
             this.id = (int)
@@ -50,6 +50,17 @@ public  class Animal{
                     .getKey();
         }
     }
+
+    @Override
+    public void delete() {
+        String sql = "DELETE FROM animals";
+        try(Connection con = DB.sql2o.open()){
+            con.createQuery(sql)
+                    .executeUpdate();
+        }
+
+    }
+
     public static List<Animal>allAnimals(){
         String sql = "SELECT  * FROM animals";
         try(Connection con = DB.sql2o.open()){

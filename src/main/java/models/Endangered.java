@@ -4,7 +4,7 @@ import java.util.List;
 import org.sql2o.*;
 
 
-public class Endangered {
+public class Endangered implements methods {
     public int id;
     public String name;
     public String health;
@@ -44,6 +44,16 @@ public class Endangered {
                             .executeUpdate()
                             .getKey();
         }
+    }
+
+    @Override
+    public void delete() {
+        String sql = "DELETE FROM endangered";
+        try(Connection con = DB.sql2o.open()){
+            con.createQuery(sql)
+                    .executeUpdate();
+        }
+
     }
 
     public static List<Endangered> all() {
