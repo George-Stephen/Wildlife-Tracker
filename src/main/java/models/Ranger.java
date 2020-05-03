@@ -58,7 +58,6 @@ public  class Ranger{
         String sql = "SELECT * FROM rangers";
         try(Connection con = DB.sql2o.open()){
             return con.createQuery(sql)
-                    .throwOnMappingFailure(false)
                     .executeAndFetch(Ranger.class);
         }
     }
@@ -74,32 +73,27 @@ public  class Ranger{
     }
     public List<Endangered> found() {
         try(Connection con = DB.sql2o.open()) {
-            String sql = "SELECT * FROM animals where rangerid=:id";
+            String sql = "SELECT * FROM endangered where ranger=:name";
             return con.createQuery(sql)
-                    .addParameter("id", this.id)
+                    .addParameter("name", this.Name)
                     .throwOnMappingFailure(false)
                     .executeAndFetch(Endangered.class);
         }
     }
     public void delete(){
         try(Connection con = DB.sql2o.open()) {
-            String sql = "DELETE FROM  rangers WHERE id = :id";
+            String sql = "DELETE FROM  rangers";
             con.createQuery(sql)
                     .addParameter("id",this.id)
-                    .throwOnMappingFailure(false)
-                    .executeUpdate();
-            String sql2 = "DELETE from sightings WHERE animal_id = :id";
-            con.createQuery(sql2)
-                    .addParameter("id", id)
                     .throwOnMappingFailure(false)
                     .executeUpdate();
         }
     }
     public  List<Sighting> allSightings(){
-        String sql = "SELECT * FROM sightings WHERE  ranger_id = : id";
+        String sql = "SELECT * FROM sightings WHERE  rangerName = : name";
         try(Connection con = DB.sql2o.open()){
             return con.createQuery(sql)
-                    .addParameter("id",this.id)
+                    .addParameter("name",this.Name)
                     .throwOnMappingFailure(false)
                     .executeAndFetch(Sighting.class);
         }

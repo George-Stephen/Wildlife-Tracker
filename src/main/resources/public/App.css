@@ -23,3 +23,7 @@ text-align : center ;
  border: double;
 
 }
+.success{
+color: green;
+font-size : 50px;
+}

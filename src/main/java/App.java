@@ -30,7 +30,7 @@ public class App{
            int sightId = Integer.parseInt(request.queryParams("sightingId"));
            try {
                Animal animal = new Animal(animalName, sightId);
-               animal.saveAnimal();
+               animal.save();
                Sighting sight = new Sighting(rangerName, location);
                sight.saveSighting();
            }catch(IllegalArgumentException exception){
@@ -46,6 +46,8 @@ public class App{
         // get endangered
         get("/Endangered/form",(request, response) -> {
             Map<String,Object>model = new HashMap<>();
+            model.put("animals",Animal.allAnimals());
+            model.put("rangers",Ranger.all());
             return new ModelAndView(model,"Endangered-form.hbs");
         },new HandlebarsTemplateEngine());
         post("/Endangered/new",(request, response) -> {
@@ -64,6 +66,28 @@ public class App{
             model.put("animals",Endangered.all());
             return new ModelAndView(model,"endangered.hbs");
         }, new HandlebarsTemplateEngine());
+        get("/ranger/form",(request, response) -> {
+            Map<String,Object>model = new HashMap<>();
+            return new ModelAndView(model,"ranger-form.hbs");
+        }, new HandlebarsTemplateEngine());
+        get("/ranger/new",(request, response) -> {
+            Map<String, Object>model = new HashMap<>();
+            model.put("rangers",Ranger.all());
+            return new ModelAndView(model,"ranger.hbs");
+        }, new HandlebarsTemplateEngine());
+        post("/ranger/new",(request, response) -> {
+            Map<String, Object>model = new HashMap<>();
+            String name = request.queryParams("Name");
+            String phone = request.queryParams("Phone");
+            String email = request.queryParams("Email");
+            try {
+                Ranger ranger = new Ranger(name, phone, email);
+                ranger.save();
+            }catch(IllegalArgumentException exception){
+                System.out.println("Please enter the correct data");
+            }
+            return new ModelAndView(model,"success.hbs");
+        },new HandlebarsTemplateEngine());
 
     }
 }
